@@ -1,6 +1,6 @@
 # MTA:SA Server Docker image
 
-This image is in testing stage. It might or might not be good for you depending on your requirements. The goal is to freeze external dependencies as much as possible. Currently only the base image version is frozen by using the specific, date-based tag. MTA package urls are not versioned however, so it always downloads whatever is pushed to public on their side.
+This image is in testing stage. It might or might not be good for you depending on your requirements. The goal is to freeze external dependencies as much as possible. Currently only the base image version is frozen by using the specific, date-based tag of current Debian Testing (Bullseye) slim image. MTA package urls are not versioned however, so it always downloads whatever is pushed to public on their side.
 
 ## Building
 
