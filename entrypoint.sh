@@ -2,17 +2,19 @@
 
 # set -
 
-readonly SERVER_DIR="/mtasa"
-readonly BASECONFIG_DIR="${SERVER_DIR}/.default/baseconfig"
-readonly DEFAULT_RESOURCES_DIR="${SERVER_DIR}/.default/resources"
+readonly MTA_SERVER_ROOT_DIR="/mtasa"
+readonly BASECONFIG_DIR="${MTA_SERVER_ROOT_DIR}/.default/baseconfig"
+readonly DEFAULT_RESOURCES_DIR="${MTA_SERVER_ROOT_DIR}/.default/resources"
 
-readonly WORK_DIR="/workdir"
-readonly DATA_DIR="${WORK_DIR}/data"
-readonly RESOURCES_DIR="${WORK_DIR}/resources"
+# readonly MTA_SERVER_WORK_DIR="/workdir"
+readonly DATA_DIR="/data"
+readonly RESOURCES_DIR="/resources"
+readonly RESOURCE_CACHE_DIR="/resource-cache"
 
 main() {
-    mkdir -p ${DATA_DIR}
-    mkdir -p ${RESOURCES_DIR}
+    # mkdir -p ${MTA_SERVER_WORK_DIR}
+    # mkdir -p ${DATA_DIR}
+    # mkdir -p ${RESOURCES_DIR}
 
     if ! [[ -f ${DATA_DIR}/acl.xml ]]; then
         cp ${BASECONFIG_DIR}/acl.xml ${DATA_DIR}/acl.xml
@@ -26,21 +28,22 @@ main() {
         cp ${BASECONFIG_DIR}/vehiclecolors.conf ${DATA_DIR}/vehiclecolors.conf
     fi;
 
-    ln -s ${RESOURCES_DIR} ${DATA_DIR}
+    ln -sf ${RESOURCES_DIR} ${DATA_DIR}
+    ln -sf ${RESOURCE_CACHE_DIR} ${DATA_DIR}
 
     if ! [ "$(ls -A ${RESOURCES_DIR})" ]; then
         cp -R ${DEFAULT_RESOURCES_DIR}/** ${RESOURCES_DIR}
     fi;
 
-    mount --bind ${DATA_DIR} ${SERVER_DIR}/mods/deathmatch
+    mount --bind ${DATA_DIR} ${MTA_SERVER_ROOT_DIR}/mods/deathmatch
 
-    # screen -dmSU mta-server ${SERVER_DIR}/mta-server64 $@
+    # screen -dmSU mta-server ${MTA_SERVER_ROOT_DIR}/mta-server64 $@
     
     # while true; do
     #     sleep 1
     # done
 
-    ${SERVER_DIR}/mta-server64 $@
+    ${MTA_SERVER_ROOT_DIR}/mta-server64 $@
 }
 
 main $@

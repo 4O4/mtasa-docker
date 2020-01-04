@@ -4,7 +4,7 @@ WORKDIR /mtasa
 
 RUN apt-get update \
     && dpkg --add-architecture i386 \
-    && apt-get install zip bash tar unzip lib32z1 libncursesw5 screen wget gdb vim -y \
+    && apt-get install zip bash tar unzip lib32z1 libncursesw5 wget gdb -y \
     && wget http://nightly.mtasa.com/files/modules/64/libmysqlclient.so.16 -P /usr/lib \
     && cp /usr/lib/libmysqlclient.so.16 /lib \
     && apt-get autoclean && apt-get autoremove
@@ -29,9 +29,9 @@ COPY entrypoint.sh /
 
 ENV TERM=xterm
 
-EXPOSE 22003/udp 22005/tcp 22126/tcp
+EXPOSE 22003/udp 22005/tcp 22126/udp
 
-VOLUME ["/workdir"]
+VOLUME ["/resources", "/resource-cache" "/data"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
