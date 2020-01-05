@@ -28,8 +28,8 @@ main() {
         cp ${BASECONFIG_DIR}/vehiclecolors.conf ${DATA_DIR}/vehiclecolors.conf
     fi;
 
-    ln -sf ${RESOURCES_DIR} ${DATA_DIR}
-    ln -sf ${RESOURCE_CACHE_DIR} ${DATA_DIR}
+    ln -sf ${RESOURCES_DIR} ${DATA_DIR}/resources
+    ln -sf ${RESOURCE_CACHE_DIR} ${DATA_DIR}/resource-cache
 
     if ! [ "$(ls -A ${RESOURCES_DIR})" ]; then
         cp -R ${DEFAULT_RESOURCES_DIR}/** ${RESOURCES_DIR}
