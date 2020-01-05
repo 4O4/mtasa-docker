@@ -17,6 +17,7 @@ RUN wget http://linux.mtasa.com/dl/multitheftauto_linux_x64.tar.gz -P /tmp \
 
 RUN tar -xzvf /tmp/multitheftauto_linux_x64.tar.gz \
     && mv multitheftauto_linux_x64/** . \
+    && rmdir mods/deathmatch \
     && rm -rfv multitheftauto_linux_x64 \
     && mkdir x64/modules && mkdir -p .default/resources \
     && mv /tmp/mta_mysql.so x64/modules \
