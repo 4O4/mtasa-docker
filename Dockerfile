@@ -31,7 +31,7 @@ ENV TERM=xterm
 
 EXPOSE 22003/udp 22005/tcp 22126/udp
 
-VOLUME ["/resources", "/resource-cache" "/data"]
+VOLUME ["/resources", "/resource-cache", "/data"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
