@@ -2,14 +2,8 @@
 
 set -e
 
-readonly MTA_SERVER_ROOT_DIR="/mtasa"
-readonly BASECONFIG_DIR="${MTA_SERVER_ROOT_DIR}/.default/baseconfig"
-readonly DEFAULT_RESOURCES_DIR="${MTA_SERVER_ROOT_DIR}/.default/resources"
-
-# readonly MTA_SERVER_WORK_DIR="/workdir"
-readonly DATA_DIR="/data"
-readonly RESOURCES_DIR="/resources"
-readonly RESOURCE_CACHE_DIR="/resource-cache"
+readonly BASECONFIG_DIR=${MTA_SERVER_ROOT_DIR}/.default/baseconfig
+readonly DATA_DIR=${MTA_SERVER_ROOT_DIR}/mods/deathmatch
 
 main() {
     if ! [[ -f ${DATA_DIR}/acl.xml ]]; then
@@ -24,13 +18,15 @@ main() {
         cp ${BASECONFIG_DIR}/vehiclecolors.conf ${DATA_DIR}/vehiclecolors.conf
     fi;
 
-    if ! [ "$(ls -A ${RESOURCES_DIR})" ]; then
-        cp -R ${DEFAULT_RESOURCES_DIR}/** ${RESOURCES_DIR}
+    if ! [ "$(ls -A /resources)" ]; then
+        echo "Downloading latest official resources package..."
+        wget ${MTA_DEFAULT_RESOURCES_URL} -P /tmp
+        unzip /tmp/mtasa-resources-latest.zip -d /resources
+        rm /tmp/mtasa-resources-latest.zip
     fi;
 
-    ln -sf ${DATA_DIR} ${MTA_SERVER_ROOT_DIR}/mods/deathmatch
-    ln -sf ${RESOURCES_DIR} ${DATA_DIR}/resources
-    ln -sf ${RESOURCE_CACHE_DIR} ${DATA_DIR}/resource-cache
+    ln -sf /resources ${DATA_DIR}/resources
+    ln -sf /resource-cache ${DATA_DIR}/resource-cache
 
     ${MTA_SERVER_ROOT_DIR}/mta-server64 $@
 }
