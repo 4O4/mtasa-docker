@@ -9,4 +9,4 @@ export MTA_SERVER_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 1)
 export MTA_SERVER_BUILD_NUMBER=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 2)
 export IMAGE_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 3 | cut -d v -f 2)
 
-docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} -t ${MTA_SERVER_VERSION}-${MTA_SERVER_BUILD_NUMBER}-v${IMAGE_VERSION} .
+docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} -t ${DOCKER_REPO}:${MTA_SERVER_VERSION}-${MTA_SERVER_BUILD_NUMBER}-v${IMAGE_VERSION} .
