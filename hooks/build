@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Attention! This only spports TAGS in the following format: {MTA_VERSION}-{MTA_BUILD_NUMBER}-v{IMAGE_VERSION}
+# Attention! This only spports TAGS in the following format: {MTA_SERVER_VERSION}-{MTA_SERVER_BUILD_NUMBER}-v{IMAGE_VERSION}
 # Example: echo 1.5.7-20359-v8
 
 (echo "${SOURCE_BRANCH}" | grep -Eq  ^[1-9][0-9.]+-[0-9]+-v[0-9]+$) && echo "Tag LGTM" || echo "Unsupported tag format!"
@@ -9,4 +9,4 @@ export MTA_SERVER_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 1)
 export MTA_SERVER_BUILD_NUMBER=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 2)
 export IMAGE_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 3 | cut -d v -f 2)
 
-docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} -t ${MTA_SERVER_VERSION}-${MTA_BUILD_NUMBER}-v${IMAGE_VERSION} .
+docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} -t ${MTA_SERVER_VERSION}-${MTA_SERVER_BUILD_NUMBER}-v${IMAGE_VERSION} .
