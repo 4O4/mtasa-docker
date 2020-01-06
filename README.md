@@ -17,32 +17,92 @@ From bash:
 
 ```
 docker run --name mta-server \ 
--t -d \ 
--p 22003:22003/udp \ 
+-t \                                        # allocate tty
+-p 22003:22003/udp \                        # map ports to host machine
 -p 22126:22126/udp \
 -p 22005:22005 \
 -v $(pwd)/mta-resources:/resources \        # mount mta resources dir
 -v $(pwd)/resource-cache:/resource-cache \  # mount cache dir, you only need it if you have fastdl server setup
 -v $(pwd)/data:/data \                      # mount mta data dir (config, acl, banlist, internal DBs etc.)
-notfound/mtasa-server:1.5.7-20359-v9        # remember to adjust the tag name
+notfound/mtasa-server:1.5.7-20359-v15       # remember to adjust the tag name
 ```
 
-From powershell:
+From powershell (basically the only difference is `pwd` syntax):
 
 ```
 docker run --name mta-server \ 
--t -d \ 
--p 22003:22003/udp \ 
+-t \                                        # allocate tty
+-p 22003:22003/udp \                        # map ports to host machine
 -p 22126:22126/udp \
 -p 22005:22005 \
 -v ${PWD}/mta-resources:/resources \        # mount mta resources dir
 -v ${PWD}/resource-cache:/resource-cache \  # mount cache dir, you only need it if you have fastdl server setup
 -v ${PWD}/data:/data \                      # mount mta data dir (config, acl, banlist, internal DBs etc.)
-notfound/mtasa-server:1.5.7-20359-v9          # remember to adjust the tag name
+notfound/mtasa-server:1.5.7-20359-v15       # remember to adjust the tag name
 ```
 
+## More examples
+
+### Local development
+
+#### Minimal setup
+
+```
+docker run --name mta-server \
+-t \
+-p 22003:22003/udp \
+-p 22005:22005 \
+-v $(pwd)/mta-resources:/resources \
+notfound/mtasa-server:1.5.7-20359-v15 
+```
+
+#### Or with access to /data (mtaserver.conf, acl.xml etc.)
+
+```
+docker run --name mta-server \
+-t \
+-p 22003:22003/udp \
+-p 22005:22005 \
+-v $(pwd)/mta-resources:/resources \
+-v $(pwd)/data:/data \
+notfound/mtasa-server:1.5.7-20359-v15 
+```
+
+### Running as non-root user:
+
+```
+docker run --name mta-server \ 
+-u $(id -u):$(id -g)                        # set uid and gid of current user
+-t \                                        # allocate tty
+-p 22003:22003/udp \                        # map ports to host machine
+-p 22126:22126/udp \
+-p 22005:22005 \
+-v $(pwd)/mta-resources:/resources \        # mount mta resources dir
+-v $(pwd)/resource-cache:/resource-cache \  # mount cache dir, you only need it if you have fastdl server setup
+-v $(pwd)/data:/data \                      # mount mta data dir (config, acl, banlist, internal DBs etc.)
+notfound/mtasa-server:1.5.7-20359-v15       # remember to adjust the tag name
+```
+
+### Running in the background (daemonized):
+
+```
+docker run --name mta-server \ 
+-d                                          # detach
+-t \                                        # allocate tty
+-p 22003:22003/udp \                        # map ports to host machine
+-p 22126:22126/udp \
+-p 22005:22005 \
+-v $(pwd)/mta-resources:/resources \        # mount mta resources dir
+-v $(pwd)/resource-cache:/resource-cache \  # mount cache dir, you only need it if you have fastdl server setup
+-v $(pwd)/data:/data \                      # mount mta data dir (config, acl, banlist, internal DBs etc.)
+notfound/mtasa-server:1.5.7-20359-v15       # remember to adjust the tag name
+```
 
 ## Building
+
+This image is built automatically and published on Docker Hub when I push tag to this repo.
+
+To build the image manually I use this exact command:
 
 From bash:
 
