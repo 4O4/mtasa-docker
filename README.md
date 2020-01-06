@@ -5,13 +5,22 @@ The goal of this image is to freeze external dependencies as much as possible. C
 - the base image, which is the official Debian Testing Bullseye (slim) locked on specific date-tagged version, as-is (no apt upgrade) - base image version will always be updated manually
 - MTA linux server package for specific build number (according to tag number)
 
+Please note that two of the legacy MTA modules (`ml_sockets.so` and `mta_mysql.so`) are included in this image for maximum compatibility with older scripts. If you want to use them, just remember to add proper entries to your server config.
+
 ## Running
 
-Just run one of the commands below depending on your environment. If you don't have any resources in `mta-resources` dir, the official default resources will be automatically downloaded and unpacked there when the container is started.
+1. Create directories named `mta-resources/`, `data/` and `resource-cache/` in your current working directory. The command below is bind-mounting these directories to the container and they must exist or you will get an error.
+2. Run one of the commands below depending on your environment. 
 
-Server config, acl config, banlist and so on are in the `/data` dir, which will be mounted as `data/` in your current directory if you use the example below.
+### What's going to happen?
 
-Note: This image is prepared for running as non-root user. Use Docker's `--user` option (or equivalent) to pass the uid / gid (of the non-root user on your host-machine) to the container.
+If you don't have any resources in `mta-resources/` dir, the official default resources will be automatically downloaded and unpacked there when the container is started.
+
+Server config, acl config, banlist and so on will be available in `data/` in your current directory.
+
+### Important notes
+
+This image is prepared for running as non-root user. Use Docker's `--user` option (or equivalent) to pass the uid / gid (of the non-root user on your host-machine) to the container.
 
 From bash:
 
@@ -108,13 +117,13 @@ From bash:
 
 ```
 env MTA_SERVER_VERSION=1.5.7 MTA_SERVER_BUILD_NUMBER=20359 IMAGE_VERSION=7 \
-docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} -t mtasa-server:${MTA_SERVER_VERSION}-v${IMAGE_VERSION} .
+docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} -t mtasa-server:${MTA_SERVER_VERSION}-${MTA_SERVER_BUILD_NUMBER}-v${IMAGE_VERSION} .
 ```
 
 From powershell:
 
 ```
 $env:MTA_SERVER_VERSION="1.5.7"; $env:MTA_SERVER_BUILD_NUMBER="20359"; $env:IMAGE_VERSION="7";
-docker build --build-arg MTA_SERVER_VERSION=$env:MTA_SERVER_VERSION -t mtasa-server:$env:MTA_SERVER_VERSION-v$env:IMAGE_VERSION .
+docker build --build-arg MTA_SERVER_VERSION=$env:MTA_SERVER_VERSION -t mtasa-server:$env:MTA_SERVER_VERSION-$env:MTA_SERVER_BUILD_NUMBER-v$env:IMAGE_VERSION .
 ```
 
