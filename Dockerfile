@@ -14,7 +14,7 @@ RUN groupadd -r mtasa && useradd --no-log-init -r -g mtasa mtasa \
     && chown mtasa:mtasa . \
     && mkdir /data /resources /resource-cache \
     && chown mtasa:mtasa /data /resources /resource-cache \
-    && chmod +w /data /resources /resource-cache \
+    && chmod go+w /data /resources /resource-cache \
     && apt-get update \
     && dpkg --add-architecture i386 \
     && apt-get install zip bash tar unzip lib32z1 libncursesw5 wget gdb -y \
