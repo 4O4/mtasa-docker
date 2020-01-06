@@ -11,6 +11,8 @@ Just run one of the commands below depending on your environment. If you don't h
 
 Server config, acl config, banlist and so on are in the `/data` dir, which will be mounted as `data/` in your current directory if you use the example below.
 
+Note: This image is prepared for running as non-root user. Use Docker's `--user` option (or equivalent) to pass the uid / gid (of the non-root user on your host-machine) to the container.
+
 From bash:
 
 ```
