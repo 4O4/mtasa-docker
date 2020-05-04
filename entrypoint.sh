@@ -48,6 +48,11 @@ main() {
         rm /tmp/mtasa-resources-latest.zip
     fi;
 
+    if [ "$(ls -A /native-modules/*.so)" ]; then
+        echo "Copying native modules..."
+        cp -vf /native-modules/*.so /mtasa/x64/modules
+    fi;
+
     if [ -z "${MTA_SERVER_PASSWORD_REPLACE_POLICY}" ]; then
         MTA_SERVER_PASSWORD_REPLACE_POLICY="when-empty"
     fi;

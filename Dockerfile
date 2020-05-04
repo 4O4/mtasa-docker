@@ -26,7 +26,7 @@ RUN wget https://nightly.mtasa.com/multitheftauto_linux_x64-${MTA_SERVER_VERSION
 
 # Main image
 
-FROM debian:bullseye-20191224-slim
+FROM debian:bullseye-20200422-slim
 
 ARG MTA_SERVER_VERSION
 ARG MTA_SERVER_BUILD_NUMBER
@@ -45,9 +45,9 @@ COPY --from=helper /mtasa-rootfs /
 
 RUN groupadd -r mtasa && useradd --no-log-init -r -g mtasa mtasa \
     && chown mtasa:mtasa . \
-    && mkdir /data /resources /resource-cache \
-    && chown -R mtasa:mtasa /data /resources /resource-cache /mtasa \
-    && chmod go+w /data /resources /resource-cache \
+    && mkdir /data /resources /resource-cache /native-modules \
+    && chown -R mtasa:mtasa /data /resources /resource-cache /native-modules /mtasa \
+    && chmod go+w /data /resources /resource-cache /native-modules \
     && apt-get update \
     && dpkg --add-architecture i386 \
     && apt-get install bash tar unzip libncursesw5 wget gdb -y \
@@ -66,7 +66,7 @@ ENV TERM=xterm
 
 EXPOSE 22003/udp 22005/tcp 22126/udp
 
-VOLUME ["/resources", "/resource-cache", "/data"]
+VOLUME ["/resources", "/resource-cache", "/native-modules", "/data"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
