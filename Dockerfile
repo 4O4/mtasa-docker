@@ -51,8 +51,8 @@ RUN groupadd -r mtasa && useradd --no-log-init -r -g mtasa mtasa \
     && apt-get update \
     && dpkg --add-architecture i386 \
     && apt-get install bash tar unzip libncursesw5 wget gdb -y \
-    && apt-get autoclean \
-    && apt-get autoremove
+    && apt-get autoclean -y \
+    && apt-get autoremove -y
 
 USER mtasa
 
