@@ -1,16 +1,76 @@
 # MTA:SA Server Docker image
 
-The goal of this image is to freeze external dependencies as much as possible. Currently everything is frozen except the baseconfig (which is unversioned according to MTA staff). This includes:
+Unofficial Docker image for Multi Theft Auto: San Andreas game server. Maintained mostly for myself, but also for anyone from the MTA community who find it useful.
 
-- the base image, which is the official Debian Testing Bullseye (slim) locked on specific date-tagged version, as-is (no apt upgrade) - base image version will always be updated manually
-- MTA linux server package for specific build number (according to tag number)
+## Details
 
-Please note that two of the legacy MTA modules (`ml_sockets.so` and `mta_mysql.so`) are included in this image for maximum compatibility with older scripts. If you want to use them, just remember to add proper entries to your server config.
+- This image is automatically built and published on Dockerhub as [`notfound/mtasa-server`](https://hub.docker.com/r/notfound/mtasa-server)
+- The base image is Debian Testing (slim) which ensures maximum compatibility and official support 
+- Total image size is oscillating around 100MiB
+- **64-bit server only**
+- On Windows, only the [**Docker Desktop with WSL 2 backend**](https://docs.docker.com/docker-for-windows/wsl/) is supported, so expect weird issues with different setup (been there, done that, big NOPE from me). On Linux there are no problems at all.
+- The tags always reflect the specific version and build number of the MTA server which they contain, i.e. `1.5.7-20595-v4`
 
-## Running
 
-1. Create directories named `mta-resources/`, `data/` and `resource-cache/` in your current working directory. The command below is bind-mounting these directories to the container and they must exist or you will get an error.
-2. Run one of the commands below depending on your environment. 
+> **Note:** the `v4` in this example is the version number of the tag itself because sometimes something might go wrong and an updated release of the same version and build number is needed)
+
+## Features
+
+- Optimized to be easy to use by anyone
+- Comes with a simple scripts which automate boring stuff:
+  
+  - Automatic resources downloader: If you don't have any resources yet, the official MTA resources package is automatically downloaded and extracted for you before the server is started
+  - Automatic baseconfig provider: If you don't have your own configuration files, all essential ones are automatically brought to you from the official `baseconfig` archive
+
+ 
+- Also covers more advanced scenarios that experienced developers and server owners might find handy:
+  
+  - Automatic creation of admin / developer account in the built-in accounts system - TODO, soon
+  - Automatic management of server password, with three strategies (policies) available to be used depending on the use case
+  - Effortless switching between different server configs, i.e. `mtaserver.dev.conf` file for development and `mtaserver.prod.conf` for the live server
+  - All of that is configurable via [environment variables](#environment-variables)
+  - Custom native modules can still be installed easily if needed (native modules will be deprecated in MTA 1.6, so they will be around for a while)
+  - Full access to the server console input and output, even if the server was started in the background (re-attaching to the console works fine, no `screen` or anything like that is involved - it's all docker)
+  - Simple directory structure on the root level (`/`) inside the image which makes them easier to find and mount
+  - Ready for fastdl setups (hosting client files over external HTTP servers)
+  - Fully prepared for running as a non-root user
+
+- For maximum compatibility with older scripts, the legacy native modules are also included in this image:
+  - Sockets Module - `ml_sockets.so`
+  - MySQL module - `mta_mysql.so`
+  
+  If you want to use them, just remember to [add proper entries to your server config](https://wiki.multitheftauto.com/wiki/Server_mtaserver.conf#module).
+
+- It's battle-tested: I'm using this image by myself in 4 different environments and I consider it production-ready :)
+
+> **Note:** The automatic resources downloader and baseconfig provider mentioned above don't interfere with your existing files. If some essential config files are totally missing, then they will be added for you from the `baseconfig` package, But if you already have your own resources and configs then don't worry - **they will NOT be overwritten**.
+
+## Environment variables
+
+- `MTA_SERVER_CONFIG_FILE_NAME` - custom name of the config file, useful for switching between configs for different environments i.e. `mtaserver.dev.conf` for development, `mtaserver.prod.conf` for the live server
+
+## Usage
+
+It's recommended to use this image in a Docker Compose setup, because it's much easier to maintain and configure everything with a YAML file instead of passing all of the options via command line.
+
+TODO: More on that will be here soon
+
+## Usage via command line
+
+This is just for reference and basic testing. You should really consider [using a Docker Compose setup as described in this section](#usage).
+
+### Required manual setup
+
+Create an empty directory somewhere on your disk, then navigate to it and create directories named:
+- `mta-resources/`
+- `data/` 
+- `resource-cache/` 
+
+The commands in the examples below are [bind-mounting](https://docs.docker.com/storage/bind-mounts/) these directories to the container and they must exist or you will get a nasty error.
+
+### See it in action
+
+Run one of [the example commands](#the-commands) in Powershell on Windows, or in bash on Linux.
 
 ### What's going to happen?
 
