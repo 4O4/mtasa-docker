@@ -2,6 +2,8 @@
 
 Unofficial Docker image for Multi Theft Auto: San Andreas game server. Maintained mostly for myself, but also for anyone from the MTA community who find it useful.
 
+![image](https://user-images.githubusercontent.com/4274691/95139095-fd730200-076b-11eb-8310-e2e009856fd4.png)
+
 ## Details
 
 - This image is automatically built and published on Dockerhub as [`notfound/mtasa-server`](https://hub.docker.com/r/notfound/mtasa-server)
@@ -20,8 +22,8 @@ Unofficial Docker image for Multi Theft Auto: San Andreas game server. Maintaine
 - Comes with a simple scripts which automate boring stuff:
   
   - Automatic resources downloader: If you don't have any resources yet, the official MTA resources package is automatically downloaded and extracted for you before the server is started
-  - Automatic baseconfig provider: If you don't have your own configuration files, all essential ones are automatically brought to you from the official `baseconfig` archive
 
+  - Automatic baseconfig provider: If you don't have your own configuration files, all essential ones are automatically brought to you from the official `baseconfig` archive
  
 - Also covers more advanced scenarios that experienced developers and server owners might find handy:
   
@@ -44,6 +46,18 @@ Unofficial Docker image for Multi Theft Auto: San Andreas game server. Maintaine
 - It's battle-tested: I'm using this image by myself in 4 different environments and I consider it production-ready :)
 
 > **Note:** The automatic resources downloader and baseconfig provider mentioned above don't interfere with your existing files. If some essential config files are totally missing, then they will be added for you from the `baseconfig` package, But if you already have your own resources and configs then don't worry - **they will NOT be overwritten**.
+
+## More screenshots
+
+Because everyone likes screenshots
+
+- Resources autodownloader in action:
+  
+  ![image](https://user-images.githubusercontent.com/4274691/95139177-285d5600-076c-11eb-9c9c-c34fd3fed2ef.png)
+
+- Directory structure after running the command visible in the screenshot above (before running it, it was three empty folders)
+  
+  ![image](https://user-images.githubusercontent.com/4274691/95139692-5db67380-076d-11eb-90de-e61f675e8e93.png)
 
 ## Environment variables
 
