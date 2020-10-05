@@ -26,7 +26,7 @@ RUN wget https://nightly.mtasa.com/multitheftauto_linux_x64-${MTA_SERVER_VERSION
 
 # Main image
 
-FROM debian:bullseye-20200422-slim
+FROM debian:bullseye-slim
 
 ARG MTA_SERVER_VERSION
 ARG MTA_SERVER_BUILD_NUMBER
