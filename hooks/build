@@ -18,7 +18,7 @@ export IMAGE_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 3 | cut -d v -f 2)
 DOCKER_TAG_NAME=${DOCKER_REPO}:${MTA_SERVER_VERSION}-${MTA_SERVER_BUILD_NUMBER}-v${IMAGE_VERSION}
 
 if [ "${IS_MASTER}" = "true" ]; then
-  DOCKER_TAG_NAME="bleeding-edge"
+  DOCKER_TAG_NAME="${DOCKER_REPO}:bleeding-edge"
 fi;
 
 
