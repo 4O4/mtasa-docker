@@ -15,11 +15,6 @@ export MTA_SERVER_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 1)
 export MTA_SERVER_BUILD_NUMBER=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 2)
 export IMAGE_VERSION=$(echo ${SOURCE_BRANCH} | cut -d '-' -f 3 | cut -d v -f 2)
 
-DOCKER_TAG_NAME=${DOCKER_REPO}:${MTA_SERVER_VERSION}-${MTA_SERVER_BUILD_NUMBER}-v${IMAGE_VERSION}
-
-if [ "${IS_MASTER}" = "true" ]; then
-  DOCKER_TAG_NAME="${DOCKER_REPO}:bleeding-edge"
-fi;
-
+DOCKER_TAG_NAME="${DOCKER_REPO}:${DOCKER_TAG}"
 
 docker build --build-arg MTA_SERVER_VERSION=${MTA_SERVER_VERSION} --build-arg MTA_SERVER_BUILD_NUMBER=${MTA_SERVER_BUILD_NUMBER} -t ${DOCKER_TAG_NAME} .
