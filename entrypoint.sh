@@ -9,6 +9,11 @@ fi;
 readonly BASECONFIG_DIR="${MTA_SERVER_ROOT_DIR}/.default/baseconfig"
 readonly DATA_DIR="${MTA_SERVER_ROOT_DIR}/mods/deathmatch"
 readonly MTA_SERVER_CONFIG_FILE_PATH="${DATA_DIR}/${MTA_SERVER_CONFIG_FILE_NAME}"
+DEFAULT_RESOURCES_ROOT_DIR="/resources"
+
+if ! [ -z "${MTA_DEFAULT_RESOURCES_SUBDIRECTORY_NAME}" ]; then
+DEFAULT_RESOURCES_ROOT_DIR="${DEFAULT_RESOURCES_ROOT_DIR}/${MTA_DEFAULT_RESOURCES_SUBDIRECTORY_NAME}"
+fi;
 
 main() {
     if [ -L "${DATA_DIR}/resources" ]; then
@@ -41,10 +46,10 @@ main() {
         cp "${BASECONFIG_DIR}/vehiclecolors.conf" "${DATA_DIR}/vehiclecolors.conf"
     fi;
 
-    if ! [ "$(ls -A /resources)" ]; then
+    if ! [ "$(ls -A ${DEFAULT_RESOURCES_ROOT_DIR})" ]; then
         echo "Downloading latest official resources package..."
         wget "${MTA_DEFAULT_RESOURCES_URL}" -O /tmp/mtasa-resources-latest.zip
-        unzip /tmp/mtasa-resources-latest.zip -d /resources
+        unzip /tmp/mtasa-resources-latest.zip -d "${DEFAULT_RESOURCES_ROOT_DIR}"
         rm /tmp/mtasa-resources-latest.zip
     fi;
 
@@ -81,7 +86,7 @@ main() {
             echo "Accepted values for MTA_SERVER_PASSWORD_REPLACE_POLICY are:"
             echo " - 'always'        (always replace password in config file)"
             echo " - 'unless-empty'  (replace password only if it's already set in config file)"
-            echo " - 'when-empty'    (default - replace password only if it's not set in config file_"
+            echo " - 'when-empty'    (default - replace password only if it's not set in config file)"
             exit 1
             ;;
     esac
