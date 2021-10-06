@@ -44,6 +44,6 @@ jobs:
             MTA_SERVER_BUILD_NUMBER=${{ steps.current_version.outputs.MTA_SERVER_BUILD_NUMBER }}
           tags: |
             notfound/mtasa-server:latest
-            notfound/mtasa-server:${{ steps.current_version.outputs.MTA_SERVER_VERSION }}-${{ steps.current_version.outputs.MTA_SERVER_BUILD_NUMBER }}-${{ steps.current_version.outputs.IMAGE_VERSION }}
+            notfound/mtasa-server:${{ steps.current_version.outputs.MTA_SERVER_VERSION }}-${{ steps.current_version.outputs.MTA_SERVER_BUILD_NUMBER }}-v${{ steps.current_version.outputs.IMAGE_VERSION }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
