@@ -15,9 +15,9 @@ jobs:
       - name: Get current version
         id: current_version
         run: |
-          echo ::set-output name=MTA_SERVER_VERSION::$(echo git describe --tags --abbrev=0 | cut -d '-' -f 1)
-          echo ::set-output name=MTA_SERVER_BUILD_NUMBER::$(echo git describe --tags --abbrev=0 | cut -d '-' -f 2)
-          echo ::set-output name=IMAGE_VERSION::$(echo git describe --tags --abbrev=0 | cut -d '-' -f 3 | cut -d v -f 2)
+          echo ::set-output name=MTA_SERVER_VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '-' -f 1)
+          echo ::set-output name=MTA_SERVER_BUILD_NUMBER::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '-' -f 2)
+          echo ::set-output name=IMAGE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d '-' -f 3 | cut -d v -f 2)
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
