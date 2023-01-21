@@ -12,7 +12,7 @@ readonly MTA_SERVER_CONFIG_FILE_PATH="${DATA_DIR}/${MTA_SERVER_CONFIG_FILE_NAME}
 DEFAULT_RESOURCES_ROOT_DIR="/resources"
 
 if ! [ -z "${MTA_DEFAULT_RESOURCES_SUBDIRECTORY_NAME}" ]; then
-DEFAULT_RESOURCES_ROOT_DIR="${DEFAULT_RESOURCES_ROOT_DIR}/${MTA_DEFAULT_RESOURCES_SUBDIRECTORY_NAME}"
+    DEFAULT_RESOURCES_ROOT_DIR="${DEFAULT_RESOURCES_ROOT_DIR}/${MTA_DEFAULT_RESOURCES_SUBDIRECTORY_NAME}"
 fi;
 
 main() {
@@ -55,7 +55,7 @@ main() {
 
     if [ "$(ls -A /native-modules/*.so)" ]; then
         echo "Copying native modules..."
-        cp -vf /native-modules/*.so "${MTA_SERVER_ROOT_DIR}/x64/modules"
+        cp -vf /native-modules/*.so "${MTA_SERVER_ROOT_DIR}/arm64/modules"
     fi;
 
     if [ -z "${MTA_SERVER_PASSWORD_REPLACE_POLICY}" ]; then
@@ -102,7 +102,7 @@ main() {
     ln -sf /resources "${DATA_DIR}/resources"
     ln -sf /resource-cache "${DATA_DIR}/resource-cache"
 
-    "${MTA_SERVER_ROOT_DIR}/mta-server64" --config "${MTA_SERVER_CONFIG_FILE_NAME}" $@
+    "${MTA_SERVER_ROOT_DIR}/mta-server-arm64" --config "${MTA_SERVER_CONFIG_FILE_NAME}" $@
 }
 
 main $@
