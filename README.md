@@ -9,8 +9,7 @@ Unofficial Docker image for Multi Theft Auto: San Andreas game server. Maintaine
 - This image is automatically built and published on Dockerhub as [`notfound/mtasa-server`](https://hub.docker.com/r/notfound/mtasa-server)
 - The base image is Debian Testing (slim) which ensures maximum compatibility and official support 
 - Total image size is oscillating around 100MiB
-- **64-bit server only**
-- On Windows, only the [**Docker Desktop with WSL 2 backend**](https://docs.docker.com/docker-for-windows/wsl/) is supported, so expect weird issues with different setup (been there, done that, big NOPE from me). On Linux there are no problems at all.
+- **arm64 server only**
 - The tags always reflect the specific version and build number of the MTA server which they contain, i.e. `1.5.7-20595-v4`
 
 
@@ -37,11 +36,6 @@ Unofficial Docker image for Multi Theft Auto: San Andreas game server. Maintaine
   - Ready for fastdl setups (hosting client files over external HTTP servers)
   - Fully prepared for running as a non-root user
 
-- For maximum compatibility with older scripts, the legacy native modules are also included in this image:
-  - Sockets Module - `ml_sockets.so`
-  - MySQL module - `mta_mysql.so`
-  
-  If you want to use them, just remember to [add proper entries to your server config](https://wiki.multitheftauto.com/wiki/Server_mtaserver.conf#module).
 
 - It's battle-tested: I'm using this image by myself in 4 different environments and I consider it production-ready :)
 
