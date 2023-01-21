@@ -11,7 +11,6 @@ WORKDIR /mtasa-rootfs
 RUN apk add --no-cache --update wget tar
 RUN wget https://nightly.mtasa.com/multitheftauto_linux_arm64-${MTA_SERVER_VERSION}-rc-${MTA_SERVER_BUILD_NUMBER}.tar.gz -O /tmp/mtasa.tar.gz \
     && wget https://linux.mtasa.com/dl/baseconfig.tar.gz -P /tmp \
-    && mkdir lib && cp ./usr/lib/libmysqlclient.so.16 ./lib \
     && tar -xzvf /tmp/mtasa.tar.gz \
     && mv multitheftauto_linux_arm64* mtasa \
     && mkdir mtasa/.default \
